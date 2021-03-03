@@ -4,45 +4,45 @@ public class Department
 {
 	private String name;
 	private Employee[] employees = new Employee[10];
+	private int lastEmployeeIndex = 0;
 	
 	public Department(String name)
 	{
 		this.name = name;
 	}
 	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
 	public void addEmployee(Employee emp)
 	{
-		for (int i = 0; i < employees.length; i++)
+		if(lastEmployeeIndex < employees.length)
 		{
-			if(employees[i] == null)
-			{
-				employees[i] = emp;
-				break;
-			}
+			employees[lastEmployeeIndex] = emp;
+			lastEmployeeIndex++;
 		}
 	}
 	
 	public Employee[] getEmployees()
 	{
-		if(getEmployeeCount() != 0)
-			return employees;
-		else
-			return null;
+		Employee[] currentEmployees = new Employee[getEmployeeCount()];
+		
+		for(int i = 0; i < getEmployeeCount(); i++)
+			currentEmployees[i] = employees[i];
+		
+		return currentEmployees;
 	}
 	
 	public int getEmployeeCount()
 	{
-		int count = 0;
-		
-		for (int i = 0; i < employees.length; i++)
-		{
-			if(employees[i] != null)
-			{
-				count++;
-			}
-		}
-		
-		return count;
+		return lastEmployeeIndex;
 	}
 	
 	public Employee getEmployeeByID(int id)
@@ -66,12 +66,7 @@ public class Department
 		double total = 0.0;
 		
 		for (Employee emp: getEmployees())
-		{
-			if(emp != null)
-			{
-				total += emp.getSalary();
-			}
-		}
+			total += emp.getSalary();
 		
 		return total;
 	}
@@ -86,7 +81,7 @@ public class Department
 		} 
 		catch (ArithmeticException e) 
 		{
-			System.out.println("Impossível calcular a média de salário.");
+			System.out.println("Sem employees para calcular a média salarial. Adicione alguns.");
 		}
 		
 		return average;
