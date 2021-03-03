@@ -1,5 +1,8 @@
 package hr;
 
+/*
+ * author: vichShir
+ */
 public class Department 
 {
 	private String name;
